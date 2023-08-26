@@ -29,6 +29,14 @@ def split_data(X,y,test_size=0.5,random_state=1):
     )
     return X_train, X_test, y_train, y_test
 
+# Create a classifier: a support vector classifier
+def train_model(X, y, model_params,model_type = 'svm'):
+    if model_type == 'svm':
+        clf = svm.SVC(**model_params)
+    clf.fit(X, y)
+    return clf
+
+
 # 1. Data Loading
 digits = datasets.load_digits()
 
@@ -39,24 +47,22 @@ for ax, image, label in zip(axes, digits.images, digits.target):
     ax.imshow(image, cmap=plt.cm.gray_r, interpolation="nearest")
     ax.set_title("Training: %i" % label)
 
-
-# 3. Data Preprocessing
-data = preprocess_data(digits.data)
-
-# 4. Data splitting
+data = digits.images
+# 3. Data splitting
 X_train, X_test, y_train, y_test = train_test_split(data, digits.target, test_size=0.3);
 
-# Create a classifier: a support vector classifier
-clf = svm.SVC(gamma=0.001)
+# 4. Data Preprocessing
+X_train = preprocess_data(X_train)
+X_test = preprocess_data(X_test)
+
+# 5. Train the data
+model = train_model(X_train, y_train, model_params={'gamma': 0.001}, model_type='svm')
 
 
-# Learn the digits on the train subset
-# 5. Model Training
-clf.fit(X_train, y_train)
 
 # Predict the value of the digit on the test subset
 # 6. Model Predictino
-predicted = clf.predict(X_test)
+predicted = model.predict(X_test)
 
 # Below we visualize the first 4 test samples and show their predicted digit value in the title.
 
@@ -73,7 +79,7 @@ for ax, image, prediction in zip(axes, X_test, predicted):
 
 #8. Model Evaluation
 print(
-    f"Classification report for classifier {clf}:\n"
+    f"Classification report for classifier {model}:\n"
     f"{metrics.classification_report(y_test, predicted)}\n"
 )
 
