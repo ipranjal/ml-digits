@@ -7,44 +7,20 @@
 import matplotlib.pyplot as plt
 
 # Import datasets, classifiers and performance metrics
-from sklearn import datasets, metrics, svm
-from sklearn.model_selection import train_test_split
+from sklearn import metrics
+from utils import preprocess_data, train_model, split_data,read_digits
 
 # The digits dataset consists of 8x8 pixel images of digits. The images attribute of the dataset stores 8x8 arrays of grayscale values for each image. We will use these arrays to visualize the first 4 images. The target attribute of the dataset stores the digit each image represents and this is included in the title of the 4 plots below.
 # Note: if we were working from image files (e.g., ‘png’ files), we would load them using matplotlib.pyplot.imread.
 
 
-# We will define utils here :
-def preprocess_data(data):
-    n_samples = len(data)
-    data = data.reshape((n_samples, -1))
-    return data
-
-# Split data into 50% train and 50% test subsets
-
-def split_data(X,y,test_size=0.5,random_state=1):
-    X_train, X_test, y_train, y_test = train_test_split(
-     X, y, test_size=test_size, shuffle=False
-    )
-    return X_train, X_test, y_train, y_test
-
-# Create a classifier: a support vector classifier
-def train_model(X, y, model_params,model_type = 'svm'):
-    if model_type == 'svm':
-        clf = svm.SVC(**model_params)
-    clf.fit(X, y)
-    return clf
-
-
 # 1. Data Loading
-digits = datasets.load_digits()
 
 
-x = digits.images
-y = digits.target 
+x,y = read_digits()
 
 # 3. Data splitting
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.3);
+X_train, X_test, y_train, y_test = split_data(x, y, test_size=0.3);
 
 # 4. Data Preprocessing
 X_train = preprocess_data(X_train)
