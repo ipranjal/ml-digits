@@ -30,3 +30,7 @@ def train_model(X, y, model_params,model_type = 'svm'):
         clf = svm.SVC(**model_params)
     clf.fit(X, y)
     return clf
+
+# def test_train_dev_split():
+
+# def predict_and_eval():

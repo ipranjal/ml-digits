@@ -15,8 +15,6 @@ from utils import preprocess_data, train_model, split_data,read_digits
 
 
 # 1. Data Loading
-
-
 x,y = read_digits()
 
 # 3. Data splitting
