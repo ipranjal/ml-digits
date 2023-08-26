@@ -14,6 +14,15 @@ from sklearn.model_selection import train_test_split
 
 # Note: if we were working from image files (e.g., ‘png’ files), we would load them using matplotlib.pyplot.imread.
 
+# We will define utils here :
+
+def preprocess_data(data):
+    n_samples = len(digits.images)
+    data = digits.images.reshape((n_samples, -1))
+    return data
+
+
+
 # 1. Data Loading
 digits = datasets.load_digits()
 
@@ -28,10 +37,8 @@ for ax, image, label in zip(axes, digits.images, digits.target):
 
 # We can then split the data into train and test subsets and fit a support vector classifier on the train samples. The fitted classifier can subsequently be used to predict the value of the digit for the samples in the test subset.
 
-# flatten the images
-# 3. Data pre processing
-n_samples = len(digits.images)
-data = digits.images.reshape((n_samples, -1))
+# 3. Data Preprocessing
+data = preprocess_data(digits.data)
 
 # Create a classifier: a support vector classifier
 clf = svm.SVC(gamma=0.001)
