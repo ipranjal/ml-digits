@@ -2,6 +2,8 @@
 # Import datasets, classifiers and performance metrics
 from sklearn import svm,datasets
 from sklearn.model_selection import train_test_split
+from sklearn import metrics
+import matplotlib.pyplot as plt
 
 #read gigits
 def read_digits():
@@ -30,3 +32,20 @@ def train_model(X, y, model_params,model_type = 'svm'):
         clf = svm.SVC(**model_params)
     clf.fit(X, y)
     return clf
+
+def split_train_dev_test(X, y, test_size, dev_size):
+    X_train, X_test, y_train, y_test = split_data(X, y, test_size=test_size)
+    X_train, X_dev, y_train, y_dev = split_data(X_train, y_train, test_size=dev_size)
+    return X_train, X_dev, X_test, y_train, y_dev, y_test
+
+def predict_and_eval(model, X_test, y_test):
+    predicted = model.predict(X_test)
+    print(
+    f"Classification report for classifier {model}:\n"
+    f"{metrics.classification_report(y_test, predicted)}\n"
+    )
+    disp = metrics.ConfusionMatrixDisplay.from_predictions(y_test, predicted)
+    disp.figure_.suptitle("Confusion Matrix")
+    print(f"Confusion matrix:\n{disp.confusion_matrix}")
+    plt.show()
+    return predicted
