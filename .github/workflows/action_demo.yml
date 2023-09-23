@@ -22,4 +22,6 @@ jobs:
         run:  pip3 install --no-cache-dir -r requirements.txt
       - name: Run test cases
         run: python3 digits.py
+      - run: echo "This statment is added to echo as part of quiz question 1"
+
           

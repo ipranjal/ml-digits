@@ -15,6 +15,10 @@ from utils import preprocess_data, tune_hparams, split_train_dev_test,read_digit
 
 x,y = read_digits()
 
+print("Total number of samples : ", len(x))
+
+print("(number of samples,length of image,height of image) is:",x.shape)
+
 test_sizes = [0.1, 0.2, 0.3]
 dev_sizes = [0.1, 0.2, 0.3]
 
