@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import metrics
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
+from skimage.transform import resize
 
 #read gigits
 def read_digits():
@@ -12,6 +13,11 @@ def read_digits():
     x = digits.images
     y = digits.target 
     return x,y
+
+def scale_image(images,dimension):
+    for i in range(len(images)):
+        images[i] = resize(images[i], ( dimension, dimension),anti_aliasing=False)
+        return images
 
 # We will define utils here :
 def preprocess_data(data):
