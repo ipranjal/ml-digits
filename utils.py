@@ -35,8 +35,8 @@ def train_model(X, y, model_params,model_type = 'svm'):
     return clf
 
 def split_train_dev_test(X, y, test_size, dev_size):
-    X_train, X_test, y_train, y_test = split_data(X, y, test_size=test_size)
-    X_train, X_dev, y_train, y_dev = split_data(X_train, y_train, test_size=dev_size)
+    X_train_dev, X_test, y_train_dev, y_test = split_data(X, y, test_size=test_size)
+    X_train, X_dev, y_train, y_dev = split_data(X_train_dev, y_train_dev, test_size=dev_size/(1-test_size))
     return X_train, X_test,X_dev, y_train, y_test, y_dev
 
 def predict_and_eval(model, X, y):
