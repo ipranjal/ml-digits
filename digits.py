@@ -22,7 +22,7 @@ print("(number of samples,length of image,height of image) is:",x.shape)
 
 test_sizes = [0.2]
 dev_sizes = [0.1]
-image_dimension = [8]
+image_dimension = [8,6,4]
 
 for dimension in image_dimension:
     x_resize = scale_image(x,dimension)

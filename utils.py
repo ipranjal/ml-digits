@@ -15,9 +15,11 @@ def read_digits():
     return x,y
 
 def scale_image(images,dimension):
-    for i in range(len(images)):
-        images[i] = resize(images[i], ( dimension, dimension),anti_aliasing=False)
-        return images
+    #resize all images
+    n_samples = len(images)
+    images = images.reshape((n_samples, -1))
+    images = resize(images,(n_samples,dimension,dimension))
+    return images
 
 # We will define utils here :
 def preprocess_data(data):
