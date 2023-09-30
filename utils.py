@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import metrics
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
+from joblib import dump,load
 
 #read gigits
 def read_digits():
@@ -49,6 +50,7 @@ def predict_and_eval(model, X, y):
 def tune_hparams(X_train, Y_train, X_dev, y_dev, list_of_all_param_combination):
     best_accuracy_so_far = -1
     best_model = None
+    best_model_path = ""
 
     for param_combination in list_of_all_param_combination:
         cur_model = train_model(X_train, Y_train, {'gamma': param_combination['gamma'],'C':param_combination['C']}, model_type='svm')
@@ -57,7 +59,12 @@ def tune_hparams(X_train, Y_train, X_dev, y_dev, list_of_all_param_combination):
             best_accuracy_so_far = cur_accuracy
             optimal_gamma = param_combination['gamma']
             optimal_C = param_combination['C']
-            best_model = cur_model
             best_hparams = {'gamma': optimal_gamma,'C':optimal_C}
-    return best_hparams, best_model, best_accuracy_so_far
+            best_model_path = "./models/best_model"+"_".join(["{}:{}".format(k,v) for k,v in best_hparams.items()])+".joblib"
+            best_model = cur_model
+
+    # save the best model
+    dump(best_model,best_model_path)
+    #best_model_path = 
+    return best_hparams, best_model_path, best_accuracy_so_far
 
