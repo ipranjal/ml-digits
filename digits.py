@@ -6,7 +6,7 @@
 
 # Import datasets, classifiers and performance metrics
 from utils import preprocess_data, tune_hparams, split_train_dev_test,read_digits,predict_and_eval
-
+from joblib import load
 
 # The digits dataset consists of 8x8 pixel images of digits. The images attribute of the dataset stores 8x8 arrays of grayscale values for each image. We will use these arrays to visualize the first 4 images. The target attribute of the dataset stores the digit each image represents and this is included in the title of the 4 plots below.
 # Note: if we were working from image files (e.g., ‘png’ files), we would load them using matplotlib.pyplot.imread.
@@ -38,7 +38,10 @@ for test_size in test_sizes:
 
         # Predict the value of the digit on the test subset
         # 6.Predict and Evaluate 
-        best_hparams, best_model, best_accuracy = tune_hparams(X_train, y_train, X_dev, y_dev, list_of_all_param_combination)
+        best_hparams, best_model_path, best_accuracy = tune_hparams(X_train, y_train, X_dev, y_dev, list_of_all_param_combination)
+        best_model = load(best_model_path)
+        
+        
         accuracy_test = predict_and_eval(best_model, X_test, y_test)
         accuracy_dev = predict_and_eval(best_model, X_dev, y_dev)
         accuracy_train = predict_and_eval(best_model, X_train, y_train)
