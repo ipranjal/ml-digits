@@ -71,6 +71,7 @@ def tune_hparams(X_train, Y_train, X_dev, y_dev, list_of_all_param_combination, 
                 optimal_max_depth = param_combination['max_depth']
                 best_hparams = {'max_depth': optimal_max_depth}
             best_model_path = "./models/{}".format(model_type)+"_".join(["{}:{}".format(k,v) for k,v in best_hparams.items()])+".joblib"
+
             best_model = cur_model
 
     # save the best model
