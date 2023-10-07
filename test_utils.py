@@ -32,7 +32,7 @@ def test_hparam_count():
 def test_mode_saving():
     X_train, y_train, X_dev, y_dev = create_dummy_data()
     list_of_all_param_combination = create_dummy_hyperparamete()
-    _, best_model_path, _ = tune_hparams(X_train, y_train, X_dev, y_dev, list_of_all_param_combination)
+    _, best_model_path, _ = tune_hparams(X_train, y_train, X_dev, y_dev, list_of_all_param_combination,'svm')
     assert os.path.exists(best_model_path)
 
 def test_data_splitting():
