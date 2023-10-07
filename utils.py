@@ -60,7 +60,7 @@ def tune_hparams(X_train, Y_train, X_dev, y_dev, list_of_all_param_combination):
             optimal_gamma = param_combination['gamma']
             optimal_C = param_combination['C']
             best_hparams = {'gamma': optimal_gamma,'C':optimal_C}
-            best_model_path = "./models/best_model"+"_".join(["{}:{}".format(k,v) for k,v in best_hparams.items()])+".joblib"
+            best_model_path = "./models/svm"+"_".join(["{}:{}".format(k,v) for k,v in best_hparams.items()])+".joblib"
             best_model = cur_model
 
     # save the best model
