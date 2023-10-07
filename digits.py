@@ -15,9 +15,9 @@ from joblib import load
 
 x,y = read_digits()
 
-print("Total number of samples : ", len(x))
+#print("Total number of samples : ", len(x))
 
-print("(number of samples,length of image,height of image) is:",x.shape)
+#print("(number of samples,length of image,height of image) is:",x.shape)
 
 test_sizes = [0.1, 0.2, 0.3]
 dev_sizes = [0.1, 0.2, 0.3]
@@ -32,21 +32,28 @@ for test_size in test_sizes:
         X_test = preprocess_data(X_test)
         X_dev = preprocess_data(X_dev)
 
+        classifer_hparam = {}
+
         gama_ranges = [0.001, 0.01, 0.1, 1, 10, 100, 1000]
         C_ranges = [0.1,1,2,5,10]
-        list_of_all_param_combination = [{'gamma': gamma, 'C': C} for gamma in gama_ranges for C in C_ranges]
+        classifer_hparam['svm']= [{'gamma': gamma, 'C': C} for gamma in gama_ranges for C in C_ranges]
+
+        max_depth = [5,10,15,20,50,100]
+        classifer_hparam['tree'] = [{'max_depth': depth} for depth in max_depth]
+
+        models = ['svm','tree']
 
         # Predict the value of the digit on the test subset
         # 6.Predict and Evaluate 
-        best_hparams, best_model_path, best_accuracy = tune_hparams(X_train, y_train, X_dev, y_dev, list_of_all_param_combination)
-        best_model = load(best_model_path)
+        for model in models:
+            best_hparams, best_model_path, best_accuracy = tune_hparams(X_train, y_train, X_dev, y_dev, classifer_hparam[model], model_type=model)
+            best_model = load(best_model_path)
         
-        
-        accuracy_test = predict_and_eval(best_model, X_test, y_test)
-        accuracy_dev = predict_and_eval(best_model, X_dev, y_dev)
-        accuracy_train = predict_and_eval(best_model, X_train, y_train)
-        print(f"test_size={test_size} dev_size={dev_size} train_size={1- (dev_size+test_size)} train_acc={accuracy_train} dev_acc={accuracy_dev} test_acc={accuracy_test}")
-        print(f"best_gamma={best_hparams['gamma']},best_C={best_hparams['C']}")
+            accuracy_test = predict_and_eval(best_model, X_test, y_test)
+            accuracy_dev = predict_and_eval(best_model, X_dev, y_dev)
+            accuracy_train = predict_and_eval(best_model, X_train, y_train)
+            print(f"test_size={test_size} dev_size={dev_size} train_size={1- (dev_size+test_size)} train_acc={accuracy_train} dev_acc={accuracy_dev} test_acc={accuracy_test}")
+        #print(f"best_gamma={best_hparams['gamma']},best_C={best_hparams['C']}")
 
 
 
