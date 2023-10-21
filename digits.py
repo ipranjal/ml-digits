@@ -80,7 +80,7 @@ for i in range(max_runs):
         
                 accuracy_test,predicted_test = predict_and_eval(best_model, X_test, y_test)
                 accuracy_dev,_ = predict_and_eval(best_model, X_dev, y_dev)
-                accuracy_train_ = predict_and_eval(best_model, X_train, y_train)
+                accuracy_train,_ = predict_and_eval(best_model, X_train, y_train)
                 print("Production accuracy "+f" model={model} run_index={i} test_size={test_size} dev_size={dev_size} train_size={1- (dev_size+test_size)} train_acc={accuracy_train} dev_acc={accuracy_dev} test_acc={accuracy_test}" if args.prod == model else "Candidate Accuracy"+f" model={model} run_index={i} test_size={test_size} dev_size={dev_size} train_size={1- (dev_size+test_size)} train_acc={accuracy_train} dev_acc={accuracy_dev} test_acc={accuracy_test}")
                 disp = metrics.ConfusionMatrixDisplay.from_predictions(y_test, predicted_test)
                 disp.figure_.suptitle("Confusion Matrix")
