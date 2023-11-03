@@ -24,12 +24,13 @@ jobs:
         run: python3 digits.py --runs 4 --test_sizes 0.2,0.3 --dev_sizes 0.2 --models svm,tree
       - name: Run test cases
         run: python3 -m pytest
-      - name: Run Docker image 
-      - uses: docker/build-push-action@v2
+      - name: Build docker image
+        uses: docker/build-push-action@v2
         with:
           tags: digits:v1
           push: false
-      - uses: addnab/docker-run-action@v3
+      - name: Run docker image
+        uses: addnab/docker-run-action@v3
         with:
           image: digits:v1
           run: echo "running script"
