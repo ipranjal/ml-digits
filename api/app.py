@@ -1,9 +1,6 @@
 from flask import Flask, request, jsonify
-<<<<<<< Updated upstream
-=======
 from joblib import load
 import os
->>>>>>> Stashed changes
 
 app = Flask(__name__)
 
