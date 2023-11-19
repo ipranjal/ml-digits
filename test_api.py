@@ -80,3 +80,10 @@ def test_predict_9():
     response = app.test_client().post("/predict", json={"image":X[9].tolist()})
     assert response.status_code == 200    
     assert response.get_json()['prediction'] == [9]
+
+def test_status_code():
+        response = app.test_client().get("/")
+        assert response.status_code == 200   
+        response = app.test_client().get("/random")
+        assert response.status_code == 404
+
