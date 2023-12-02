@@ -71,6 +71,10 @@ for i in range(max_runs):
             max_depth = [5,10,15,20,50,100]
             classifer_hparam['tree'] = [{'max_depth': depth} for depth in max_depth]
 
+            solvers = ['lbfgs', 'liblinear', 'newton-cg', 'sag', 'saga']
+            classifer_hparam['lr'] = [{'solver': solver} for solver in solvers]
+
+
         # Predict the value of the digit on the test subset
         # 6.Predict and Evaluate 
             for model in models:
