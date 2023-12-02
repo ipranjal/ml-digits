@@ -32,7 +32,7 @@ def hello_world_post():
     return {"op" : "Hello, World POST " + request.json["suffix"]}
 
 @app.route('/predict/<model_name>', methods=['POST'])
-def pred_model():
+def pred_model(model_name):
     js = request.get_json()
     model_name = escape(model_name)
     image1 = [js['image']]
